@@ -17,6 +17,10 @@ class Concealer::Strategy::MultiLevel < Concealer::Strategy
 
   protected
 
+  def current_user
+    @current_user
+  end
+
   def required_level_for(model, method, args)
     @levels.first
   end
