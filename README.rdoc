@@ -1,0 +1,80 @@
+= concealer
+
+Privacy control your models (or any other Ruby object) with ease.
+
+== Requirements
+
+* activesupport (~> 3.0)
+
+
+== Install
+
+To install concealer, simply add it to your Gemfile:
+
+  gem 'concealer'
+
+In order to get the latest development version of concealer:
+
+  gem 'concealer', :git => 'git://github.com/flinc/concealer'
+
+Finally run:
+
+  bundle install
+
+
+== Usage
+
+To use concealer simply include the Concealer module:
+
+  class User
+    include Concealer
+
+    attr_accessor :name, :email
+  end
+
+This will add a #concealed method to your object. Calling this will return a proxy object that checks every call and only forwards allowed ones to the original object.
+
+  user = User.new
+  user.concealed.name # => user.name
+  user.concealed.email # => user.email
+
+=== Strategies
+
+The default strategy for Concealer is Concealer::Strategy::Allow which forwards every call to the original object. At the moment there are several other strategies available:
+
+* Concealer::Strategy::Allow
+* Concealer::Strategy::Deny
+* Concealer::Strategy::Whitelist
+* Concealer::Strategy::Blacklist
+
+You can set the strategy for Concealer using <tt>Concealer.strategey=</tt>
+
+  Concealer.strategy = Concealer::Strategy::Deny.new
+
+  user = User.new
+  user.concealed.name # => nil
+  user.concealed.email # => nil
+
+==== Implementing Strategies
+
+You can implement your own strategies by subclassing Concealer::Strategy or adding an <tt>#allow?(model, attribute, args) method to any object you pass into <tt>Concealer.strategy=</tt>.
+
+
+== Known issues
+
+See https://github.com/flinc/concealer/issues
+
+
+== Repository
+
+See https://github.com/flinc/concealer and feel free to fork it!
+
+
+== Contributors
+
+See a list of all contributors at https://github.com/flinc/concealer/contributors. Thanks a lot everyone!
+
+
+== Copyright
+
+Copyright (c) 2011 flinc AG. See LICENSE for details.
