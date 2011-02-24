@@ -5,6 +5,7 @@ module Concealer
     autoload :Deny,       'concealer/strategy/deny'
     autoload :Blacklist,  'concealer/strategy/blacklist'
     autoload :Whitelist,  'concealer/strategy/whitelist'
+    autoload :MultiLevel, 'concealer/strategy/multi_level'
 
     def allow?(model, method, args)
       raise "The stragegy must implement #allow?(model, method, args)"

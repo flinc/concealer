@@ -47,7 +47,7 @@ The default strategy for Concealer is Concealer::Strategy::Allow which forwards 
 * Concealer::Strategy::Whitelist
 * Concealer::Strategy::Blacklist
 
-You can set the strategy for Concealer using <tt>Concealer.strategey=</tt>
+You can set the strategy for Concealer using <tt>Concealer.strategy=</tt>
 
   Concealer.strategy = Concealer::Strategy::Deny.new
 
@@ -55,7 +55,12 @@ You can set the strategy for Concealer using <tt>Concealer.strategey=</tt>
   user.concealed.name # => nil
   user.concealed.email # => nil
 
-==== Implementing Strategies
+=== Advanced Strategies
+
+* Concealer::Strategy::MultiLevel
+
+
+=== Implementing Strategies
 
 You can implement your own strategies by subclassing Concealer::Strategy or adding an <tt>#allow?(model, attribute, args)</tt> method to any object you pass into <tt>Concealer.strategy=</tt>.
 
