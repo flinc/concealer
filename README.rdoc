@@ -57,7 +57,7 @@ You can set the strategy for Concealer using <tt>Concealer.strategey=</tt>
 
 ==== Implementing Strategies
 
-You can implement your own strategies by subclassing Concealer::Strategy or adding an <tt>#allow?(model, attribute, args) method to any object you pass into <tt>Concealer.strategy=</tt>.
+You can implement your own strategies by subclassing Concealer::Strategy or adding an <tt>#allow?(model, attribute, args)</tt> method to any object you pass into <tt>Concealer.strategy=</tt>.
 
 
 == Known issues
