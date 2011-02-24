@@ -1,0 +1,3 @@
+module Concealer
+  # Your code goes here...
+end
