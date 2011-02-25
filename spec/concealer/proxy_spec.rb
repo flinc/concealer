@@ -17,8 +17,8 @@ describe Concealer::Proxy do
   end
 
   it "should delegate all unknown method calls to the target" do
-    model.should_receive(:some_method)
-    subject.some_method
+    model.should_receive(:allowed_method)
+    subject.allowed_method
   end
 
   it "should ask the strategy whether the method is allowed for the object" do
@@ -26,8 +26,12 @@ describe Concealer::Proxy do
     subject.allowed_method(:args)
   end
 
-  it "should return nil for unallowed methods" do
+  it "should return the fallback for unallowed methods" do
     strategy.stub!(:allow?).and_return(false)
-    subject.some_method.should_not be
+
+    fallback = mock(Concealer::Fallback, :value_for => :fallback)
+    Concealer.stub!(:fallback_for).and_return(fallback)
+
+    subject.allowed_method.should eq(:fallback)
   end
 end

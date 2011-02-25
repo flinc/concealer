@@ -13,7 +13,7 @@ module Concealer
       if @strategy.allow?(@target, name, args)
         @target.send(name, *args, &block)
       else
-        return nil
+        Concealer.fallback_for(@target, name).value_for(@target, name, args)
       end
     end
   end
