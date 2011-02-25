@@ -20,6 +20,12 @@ module Concealer
     Thread.current[:concealer_strategy] || Concealer::Strategy::Allow.new
   end
 
+  def self.with_strategy(strategy)
+    save, self.strategy = self.strategy, strategy
+    yield
+    self.strategy = save
+  end
+
   def self.register_fallback(model, method, fallback)
     @@fallbacks ||= {}
     @@fallbacks[model.to_s.to_sym] ||= {}

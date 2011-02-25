@@ -12,6 +12,24 @@ describe Concealer do
 
   end
 
+
+  describe '.with_strategy' do
+
+    it "should change the strategy within the block" do
+      strategy = Concealer::Strategy::Deny.new
+      Concealer.with_strategy(strategy) do
+        Concealer.strategy.should be(strategy)
+      end
+    end
+
+    it "should reset the strategy after the block was executed" do
+      strategy = Concealer.strategy
+      Concealer.with_strategy(Concealer::Strategy::Deny.new) {}
+      Concealer.strategy.should be(strategy)
+    end
+
+  end
+
   describe '.default_fallback' do
 
     it "should default to Concealer::Fallback::Nil" do
