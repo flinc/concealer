@@ -57,8 +57,70 @@ You can set the strategy for Concealer using <tt>Concealer.strategy=</tt>
 
 === Advanced Strategies
 
-* Concealer::Strategy::MultiLevel
+There is one more advanced privacy strategies available: <tt>Concealer::Strategy::MultiLevel</tt>.
+To use it you'll have to implement your own subclass of it to match your domain model. The example below illustrates what it might look like.
 
+Your custom multi level privacy strategy:
+
+  class CustomPrivacyStrategy < Concealer::Strategy::MultiLevel
+
+    def required_level_for(model, name, args)
+      case model
+        when Profile, User:
+          return privacy_level_for(owner_of(model), :name) if [:firstname, :lastname].include?(name.to_sym)
+          return privacy_level_for(owner_of(model), :age)  if [:age].include?(name.to_sym)
+      end
+
+      :myself
+    end
+
+    protected
+
+    def privacy_level_for(user, key)
+      user.privacy_settings.send(key).try(:to_sym)
+    end
+  end
+
+
+Your User model:
+
+  class User
+
+    # ...
+
+    def relation_level_to(other)
+      if other == self
+        :myself
+      elsif self.friend_of?(other)
+        :friends
+      else
+        :everyone
+      end
+    end
+  end
+
+In your Rails ApplicationController:
+
+  around_filter :setup_privacy_strategy
+
+  def setup_privacy_strategy(&block)
+    Concealer.with_strategy(CustomPrivacyStrategy.new(current_user, [:myself, :friends, :everyone]), &block)
+  end
+
+
+=== Fallbacks
+
+In some cases you don't want to just return nil for unallowed method calls. In order to provide sensible return values Concealer has a fallbacks. Available fallbacks are:
+
+* Concealer::Fallback::Nil
+* Concealer::Fallback::String
+* Concealer::Fallback::Paperclip
+
+You can add fallbacks for method calls like this:
+
+  Concealer.register_fallback(User, :email, Concealer::Fallback::String.new("unkown"))
+  Concealer.register_fallback(User, :avatar, Concealer::Fallback::Paperclip.new)
+  Concealer.register_fallback(User, :name, lambda { |model, method, args| "#{model.send(method).at(0)}." })
 
 === Implementing Strategies
 
