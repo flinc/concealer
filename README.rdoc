@@ -108,6 +108,11 @@ In your Rails ApplicationController:
   end
 
 
+=== Implementing Strategies
+
+You can implement your own strategies by subclassing Concealer::Strategy or adding an <tt>#allow?(model, attribute, args)</tt> method to any object you pass into <tt>Concealer.strategy=</tt>.
+
+
 === Fallbacks
 
 In some cases you don't want to just return nil for unallowed method calls. In order to provide sensible return values Concealer has a fallbacks. Available fallbacks are:
@@ -121,10 +126,6 @@ You can add fallbacks for method calls like this:
   Concealer.register_fallback(User, :email, Concealer::Fallback::String.new("unkown"))
   Concealer.register_fallback(User, :avatar, Concealer::Fallback::Paperclip.new)
   Concealer.register_fallback(User, :name, lambda { |model, method, args| "#{model.send(method).at(0)}." })
-
-=== Implementing Strategies
-
-You can implement your own strategies by subclassing Concealer::Strategy or adding an <tt>#allow?(model, attribute, args)</tt> method to any object you pass into <tt>Concealer.strategy=</tt>.
 
 
 == Known issues
