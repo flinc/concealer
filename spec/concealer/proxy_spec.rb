@@ -29,7 +29,7 @@ describe Concealer::Proxy do
   it "should return the fallback for unallowed methods" do
     strategy.stub!(:allow?).and_return(false)
 
-    fallback = mock(Concealer::Fallback, :value_for => :fallback)
+    fallback = mock(Concealer::Fallback, :call => :fallback)
     Concealer.stub!(:fallback_for).and_return(fallback)
 
     subject.allowed_method.should eq(:fallback)

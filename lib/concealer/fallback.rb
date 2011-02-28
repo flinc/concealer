@@ -5,8 +5,8 @@ module Concealer
     autoload :EmptyString,  'concealer/fallback/empty_string'
     autoload :Paperclip,    'concealer/fallback/paperclip'
 
-    def value_for(model, method, args)
-      raise "The fallback must implement #value_for(model, method, args)"
+    def call(model, method, args)
+      raise "The fallback must implement #call(model, method, args)"
     end
   end
 end
