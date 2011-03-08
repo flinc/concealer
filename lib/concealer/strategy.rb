@@ -5,6 +5,8 @@ module Concealer
     autoload :Deny,       'concealer/strategy/deny'
     autoload :Blacklist,  'concealer/strategy/blacklist'
     autoload :Whitelist,  'concealer/strategy/whitelist'
+    autoload :Any,        'concealer/strategy/any'
+    autoload :All,        'concealer/strategy/all'
     autoload :MultiLevel, 'concealer/strategy/multi_level'
 
     def allow?(model, method, args)
