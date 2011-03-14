@@ -10,7 +10,9 @@ module Concealer
     protected
 
     def method_missing(name, *args, &block)
-      if @strategy.allow?(@target, name, args)
+      if !@target.respond_to?(name)
+        raise NoMethodError, "#{@target} does not respond to #{name}"
+      elsif @strategy.allow?(@target, name, args)
         @target.send(name, *args, &block)
       else
         Concealer.fallback_for(@target, name).call(@target, name, args)

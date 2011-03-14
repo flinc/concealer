@@ -12,7 +12,7 @@ describe Concealer::Proxy do
     end
 
     it "should accept a target object and a strategy" do
-      expect { Concealer::Proxy.new(model, Concealer.strategy) }.to_not raise_error ArgumentError
+      expect { Concealer::Proxy.new(model, strategy) }.to_not raise_error ArgumentError
     end
   end
 
@@ -33,5 +33,9 @@ describe Concealer::Proxy do
     Concealer.stub!(:fallback_for).and_return(fallback)
 
     subject.allowed_method.should eq(:fallback)
+  end
+
+  it "should raise an NoMethodError when the target doesn't respond to a given method" do
+    expect { subject.some_missing_method }.to raise_error NoMethodError, /does not respond to some_missing_method/
   end
 end
