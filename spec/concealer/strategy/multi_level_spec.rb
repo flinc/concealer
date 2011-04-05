@@ -9,6 +9,18 @@ describe Concealer::Strategy::MultiLevel do
 
   subject { Concealer::Strategy::MultiLevel.new(current_user, levels) }
 
+  context 'with no current_user given' do
+    subject { Concealer::Strategy::MultiLevel.new(nil, levels) }
+
+    before(:each) do
+      subject.stub!(:required_level_for).and_return(:friends_of_friends)
+    end
+
+    it "should deny the call" do
+      subject.allow?(other_user, :name, nil).should be_false
+    end
+  end
+
   context 'required level higher than actual level' do
     before(:each) do
       subject.stub!(:required_level_for).and_return(:myself)

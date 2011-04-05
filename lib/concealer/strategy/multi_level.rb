@@ -7,7 +7,7 @@ class Concealer::Strategy::MultiLevel < Concealer::Strategy
 
   def allow?(model, method, args)
     required_level = required_level_for(model, method, args)
-    actual_level = @current_user.relation_level_to(owner_of(model))
+    actual_level = @current_user.try(:relation_level_to, owner_of(model)) || @levels.last
 
     raise "The level #{required_level} is not valid." unless @levels.include?(required_level)
     raise "The level #{actual_level} is not valid."   unless @levels.include?(actual_level)
