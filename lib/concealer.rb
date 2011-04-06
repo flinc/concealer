@@ -49,9 +49,10 @@ module Concealer
   # Registers a new fallback for the given method on the given model
   #
   def self.register_fallback(model, method, fallback)
+    name = model.is_a? Symbol ? model : model.to_s.to_sym
     @@fallbacks ||= {}
-    @@fallbacks[model.to_s.to_sym] ||= {}
-    @@fallbacks[model.to_s.to_sym][method] = fallback
+    @@fallbacks[name] ||= {}
+    @@fallbacks[name][method] = fallback
   end
 
   ##
