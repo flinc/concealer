@@ -35,13 +35,13 @@ describe Concealer::Proxy do
     subject.allowed_method.should eq(:fallback)
   end
   
-  it "should return false for allowed_method_concealed?" do
-    subject.allowed_method_concealed?.should be_false
+  it "should return false for allowed_method_allowed?" do
+    subject.allowed_method_allowed?.should be_true
   end
 
-  it "should return true for denied_method_concealed?" do
+  it "should return true for denied_method_allowed?" do
     strategy.stub!(:allow?).and_return(false)
-    subject.denied_method_concealed?.should be_true
+    subject.denied_method_allowed?.should be_false
   end
 
   it "should raise an NoMethodError when the target doesn't respond to a given method" do

@@ -11,10 +11,10 @@ module Concealer
 
     def method_missing(name, *args, &block)
 
-      check_concealed = /(.+)_concealed\?$/.match(name.to_s).try(:[], 1).try(:to_sym)
+      check_concealed = /(.+)_allowed\?$/.match(name.to_s).try(:[], 1).try(:to_sym)
       
       if check_concealed && @target.respond_to?(check_concealed)
-        return !@strategy.allow?(@target, check_concealed, args)
+        return @strategy.allow?(@target, check_concealed, args)
       end
       
       if !@target.respond_to?(name)
