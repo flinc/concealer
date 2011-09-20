@@ -10,6 +10,13 @@ module Concealer
     protected
 
     def method_missing(name, *args, &block)
+
+      check_concealed = /(.+)_allowed\?$/.match(name.to_s).try(:[], 1).try(:to_sym)
+      
+      if check_concealed && @target.respond_to?(check_concealed)
+        return @strategy.allow?(@target, check_concealed, args)
+      end
+      
       if !@target.respond_to?(name)
         raise NoMethodError, "#{@target} does not respond to #{name}"
       elsif @strategy.allow?(@target, name, args)
