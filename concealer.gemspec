@@ -1,4 +1,5 @@
-# -*- encoding: utf-8 -*-
+# encoding: UTF-8
+
 $:.push File.expand_path("../lib", __FILE__)
 require "concealer/version"
 
@@ -19,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency('activesupport', ['~> 3.0'])
 
-  s.add_development_dependency('rspec', ['~> 2.3'])
+  s.add_development_dependency('rspec', ['~> 2.6'])
   s.add_development_dependency('hanna-nouveau')
   s.add_development_dependency('rake')
 end
