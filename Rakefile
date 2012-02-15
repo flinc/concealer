@@ -11,7 +11,6 @@ spec = Gem::Specification.load("concealer.gemspec")
 RSpec::Core::RakeTask.new(:spec)
 
 RDoc::Task.new do |rdoc|
-  rdoc.generator = 'hanna'
   rdoc.rdoc_dir = 'doc'
   rdoc.main = "README.rdoc"
   rdoc.options += spec.rdoc_options
