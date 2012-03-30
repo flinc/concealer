@@ -74,6 +74,6 @@ module Concealer
   #   user.concealed.name # => nil
   #
   def concealed
-    Proxy.new(self, Concealer.strategy)
+    @concealed ||= Proxy.new(self, Concealer.strategy)
   end
 end
