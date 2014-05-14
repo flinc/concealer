@@ -13,7 +13,7 @@ describe Concealer::Strategy::MultiLevel do
     subject { Concealer::Strategy::MultiLevel.new(nil, levels) }
 
     before(:each) do
-      subject.stub!(:required_level_for).and_return(:friends_of_friends)
+      subject.stub(:required_level_for).and_return(:friends_of_friends)
     end
 
     it "should deny the call" do
@@ -23,7 +23,7 @@ describe Concealer::Strategy::MultiLevel do
 
   context 'required level higher than actual level' do
     before(:each) do
-      subject.stub!(:required_level_for).and_return(:myself)
+      subject.stub(:required_level_for).and_return(:myself)
     end
 
     it "should deny the call" do
@@ -33,7 +33,7 @@ describe Concealer::Strategy::MultiLevel do
 
   context 'required level lower than actual level' do
     before(:each) do
-      subject.stub!(:required_level_for).and_return(:friends_of_friends)
+      subject.stub(:required_level_for).and_return(:friends_of_friends)
     end
 
     it "should allow the call" do
@@ -43,7 +43,7 @@ describe Concealer::Strategy::MultiLevel do
 
   context 'required level equals actual level' do
     before(:each) do
-      subject.stub!(:required_level_for).and_return(:friends)
+      subject.stub(:required_level_for).and_return(:friends)
     end
 
     it "should allow the call" do

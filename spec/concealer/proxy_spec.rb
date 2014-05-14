@@ -12,7 +12,7 @@ describe Concealer::Proxy do
     end
 
     it "should accept a target object and a strategy" do
-      expect { Concealer::Proxy.new(model, strategy) }.to_not raise_error ArgumentError
+      expect { Concealer::Proxy.new(model, strategy) }.not_to raise_error
     end
   end
 
@@ -27,10 +27,10 @@ describe Concealer::Proxy do
   end
 
   it "should return the fallback for unallowed methods" do
-    strategy.stub!(:allow?).and_return(false)
+    strategy.stub(:allow?).and_return(false)
 
-    fallback = mock(Concealer::Fallback, :call => :fallback)
-    Concealer.stub!(:fallback_for).and_return(fallback)
+    fallback = double(Concealer::Fallback, :call => :fallback)
+    Concealer.stub(:fallback_for).and_return(fallback)
 
     subject.allowed_method.should eq(:fallback)
   end
@@ -40,7 +40,7 @@ describe Concealer::Proxy do
   end
 
   it "should return true for denied_method_allowed?" do
-    strategy.stub!(:allow?).and_return(false)
+    strategy.stub(:allow?).and_return(false)
     subject.denied_method_allowed?.should be_false
   end
 

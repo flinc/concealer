@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe Concealer::Strategy::All do
 
-  let(:strategy_1) { mock(Concealer::Strategy::Allow.new) }
-  let(:strategy_2) { mock(Concealer::Strategy::Allow.new) }
+  let(:strategy_1) { double(Concealer::Strategy::Allow.new) }
+  let(:strategy_2) { double(Concealer::Strategy::Allow.new) }
 
   subject { Concealer::Strategy::All.new(strategy_1, strategy_2) }
 
   context 'both deny' do
     before(:each) do
-      strategy_1.stub!(:allow?).and_return(false)
-      strategy_2.stub!(:allow?).and_return(false)
+      strategy_1.stub(:allow?).and_return(false)
+      strategy_2.stub(:allow?).and_return(false)
     end
 
     it "should deny the call" do
@@ -20,8 +20,8 @@ describe Concealer::Strategy::All do
 
   context 'both allow' do
     before(:each) do
-      strategy_1.stub!(:allow?).and_return(true)
-      strategy_2.stub!(:allow?).and_return(true)
+      strategy_1.stub(:allow?).and_return(true)
+      strategy_2.stub(:allow?).and_return(true)
     end
 
     it "should allow the call" do
@@ -31,8 +31,8 @@ describe Concealer::Strategy::All do
 
   context 'only one allows' do
     before(:each) do
-      strategy_1.stub!(:allow?).and_return(true)
-      strategy_2.stub!(:allow?).and_return(false)
+      strategy_1.stub(:allow?).and_return(true)
+      strategy_2.stub(:allow?).and_return(false)
     end
 
     it "should deny the call" do
